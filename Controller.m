@@ -13,16 +13,15 @@
 
 - (void)applicationDidBecomeActive:(NSNotification*)aNotification
 {
-	[self setWindowFrameEnabled:YES];
+	[self setWindowFrameEnabled:NO];
+	
+	[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
+	[self setClickThrough:YES];
 }
 
 
 - (void)applicationDidResignActive:(NSNotification*)aNotification
 {
-	[self setWindowFrameEnabled:NO];
-	
-	[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
-	[self setClickThrough:YES];
 }
 
 
