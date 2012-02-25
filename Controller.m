@@ -58,17 +58,27 @@
 	else
 		[self loadURL:[NSURL URLWithString:@"http://www.panic.com/"]];
 	
+    NSMenu* m = mainmenu;
+    NSStatusItem* item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+    [item retain];
+    [item setMenu:m];
+    [item setTitle:@"WD"];
+    [item setHighlightMode:YES];
+    
+    
 	[NSApp deactivate];
 }
 
 	
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame
 {	
+    
 	NSWindow* oldWindow = window;
 	window = [[CustomWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO];
 	
 	[window setMinSize:NSMakeSize(200, 100)];
 	[window setTitle:@"WebDesktop"];
+
 	
 	if ( !showFrame )
 	{

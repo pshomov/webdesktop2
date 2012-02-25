@@ -9,6 +9,7 @@
     IBOutlet NSWindow* openLocationWindow;
     IBOutlet NSWindow* prefsWindow;
 	IBOutlet NSPopUpButton* refreshPopUp;
+    IBOutlet NSMenu* mainmenu;
 
 	BOOL bringToFront;
 	NSURLRequest* cachedRequest;
