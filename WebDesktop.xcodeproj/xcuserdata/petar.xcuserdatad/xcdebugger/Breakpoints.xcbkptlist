@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Controller.m"
-         timestampString = "351729326.195703"
+         timestampString = "351903432.848454"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "72"
-         endingLineNumber = "72"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
          landmarkName = "-createWindowWithContentRect:showFrame:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -23,11 +23,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Controller.m"
-         timestampString = "351729326.195703"
+         timestampString = "351901553.541802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "54"
-         endingLineNumber = "54"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
