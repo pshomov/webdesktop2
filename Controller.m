@@ -10,6 +10,10 @@
 	return YES;
 }
 
+- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
+{
+    [self applicationDidBecomeActive:aNotification];
+}
 
 - (void)applicationDidBecomeActive:(NSNotification*)aNotification
 {
@@ -18,7 +22,6 @@
 	[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
 	[self setClickThrough:YES];
 }
-
 
 - (void)awakeFromNib
 {
