@@ -20,11 +20,6 @@
 }
 
 
-- (void)applicationDidResignActive:(NSNotification*)aNotification
-{
-}
-
-
 - (void)awakeFromNib
 {
 	NSRect contentRect;
@@ -40,11 +35,6 @@
 	else
 	{
 		contentRect = [[NSScreen mainScreen] frame];
-		
-//		contentRect.size.width = 800;
-//		contentRect.size.height = 600;
-//
-//		contentRect.origin.y -= 100;
 	}
 	
 	[self createWindowWithContentRect:contentRect showFrame:NO];
@@ -78,17 +68,8 @@
 	
 	[window setMinSize:NSMakeSize(200, 100)];
 	[window setTitle:@"WebDesktop"];
-
 	
-	if ( !showFrame )
-	{
-		[window setLevel:kCGDesktopWindowLevel];
-//		contentRect.origin.y -= 22;
-	}
-	else
-	{
-//		contentRect.origin.y += 22;
-	}
+    [window setLevel:kCGDesktopWindowLevel];
 	
 	[window setFrame:contentRect display:YES];
 	[window setAlphaValue:[activeOpacitySlider doubleValue]];
