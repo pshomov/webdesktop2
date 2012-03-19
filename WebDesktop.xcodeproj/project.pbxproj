@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F10F08DB056C90030013C46D /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		D28A867A1517E2280048464C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D28A86781517E2280048464C /* MainMenu.xib */; };
 		F10F08DC056C90030013C46D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		F10F08DD056C90030013C46D /* WebDesktop.icns in Resources */ = {isa = PBXBuildFile; fileRef = F1DDC5CF04B4CDE60081D57A /* WebDesktop.icns */; };
 		F10F08DF056C90030013C46D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -23,9 +23,9 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		D28A86791517E2280048464C /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F10F08E8056C90030013C46D /* WebDesktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebDesktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F180279C03AFB58300A800AB /* CustomWindow.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CustomWindow.m; sourceTree = "<group>"; };
 		F180279D03AFB58300A800AB /* CustomWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CustomWindow.h; sourceTree = "<group>"; };
@@ -119,8 +119,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D28A86781517E2280048464C /* MainMenu.xib */,
 				F1DDC5CF04B4CDE60081D57A /* WebDesktop.icns */,
-				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 			);
 			name = Resources;
@@ -170,6 +170,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* fstest */;
 			projectDirPath = "";
@@ -185,9 +186,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F10F08DB056C90030013C46D /* MainMenu.nib in Resources */,
 				F10F08DC056C90030013C46D /* InfoPlist.strings in Resources */,
 				F10F08DD056C90030013C46D /* WebDesktop.icns in Resources */,
+				D28A867A1517E2280048464C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,12 +217,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+		D28A86781517E2280048464C /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				29B97319FDCFA39411CA2CEA /* English */,
+				D28A86791517E2280048464C /* English */,
 			);
-			name = MainMenu.nib;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
