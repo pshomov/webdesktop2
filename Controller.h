@@ -30,15 +30,11 @@
 - (IBAction)prefs:(id)sender;
 - (IBAction)prefsOK:(id)sender;
 - (IBAction)refresh:(id)sender;
-- (IBAction)setRefreshInterval:(id)sender;
 
-- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame;
 - (NSURL*)formatURL:(NSURL*)inURL;
-- (void)initPrefs;
 - (void)loadURL:(NSURL*)inURL;
 - (void)resetOpacity;
-- (void)setClickThrough:(BOOL)clickThrough;
-- (void)setWindowFrameEnabled:(BOOL)windowFrameEnabled;
-- (void)startTimer:(int)mins;
+- (void) setwindow:(CustomWindow *)wnd;
 
+- (void)setWebView:(WebView *)view;
 @end

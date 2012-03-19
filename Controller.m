@@ -3,118 +3,6 @@
 
 @implementation Controller
 
-- (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename
-{
-	NSURL* url = [NSURL fileURLWithPath:filename];
-	[self loadURL:url];
-	return YES;
-}
-
-- (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification
-{
-    [self applicationDidBecomeActive:aNotification];
-}
-
-- (void)applicationDidBecomeActive:(NSNotification*)aNotification
-{
-	[self setWindowFrameEnabled:NO];
-	
-	[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
-	[self setClickThrough:YES];
-}
-
-- (void)awakeFromNib
-{
-	NSRect contentRect;
-	
-	bringToFront = YES;
-	
-	[self initPrefs];
-
-	NSString* frameString = NULL;
-
-	if ( frameString )
-		contentRect = NSRectFromString(frameString);
-	else
-	{
-		contentRect = [[NSScreen mainScreen] frame];
-	}
-	
-	[self createWindowWithContentRect:contentRect showFrame:NO];
-
-	if ( !frameString )
-		[window center];
-	
-	NSString* lastURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"LastURL"];
-	if ( lastURL )
-		[self loadURL:[NSURL URLWithString:lastURL]];
-	else
-		[self loadURL:[NSURL URLWithString:@"http://www.panic.com/"]];
-	
-    NSMenu* m = mainmenu;
-    NSStatusItem* item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    [item retain];
-    [item setMenu:m];
-    [item setTitle:@"WD"];
-    [item setHighlightMode:YES];
-    
-    
-	[NSApp deactivate];
-}
-
-	
-- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame
-{	
-    
-	NSWindow* oldWindow = window;
-	window = [[CustomWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO];
-	
-	[window setMinSize:NSMakeSize(200, 100)];
-	[window setTitle:@"WebDesktop"];
-	
-    [window setLevel:kCGDesktopWindowLevel];
-	
-	[window setFrame:contentRect display:YES];
-	[window setAlphaValue:[activeOpacitySlider doubleValue]];
-	
-	[window setDelegate:self];
-	[self setClickThrough:NO];
-
-	if ( !webView )
-	{
-		webView = [[WebView alloc] initWithFrame:[[window contentView] frame] frameName:@"main" groupName:@"main"];
-		[webView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-		[webView setUIDelegate:self];
-		[webView setPolicyDelegate:self];
-		[webView setDownloadDelegate:self];
-		
-		[[window contentView] addSubview:webView];
-	}
-	else
-	{
-		[webView setFrame:[[window contentView] frame]];
-		[webView retain];
-		[[window contentView] addSubview:webView];
-		[webView release];
-	}	
-	
-	[window makeFirstResponder:webView];
-	
-	if ( bringToFront )
-		[window makeKeyAndOrderFront:nil];
-	else
-	{
-		[window makeKeyWindow];
-		[window orderBack:nil];
-	}
-	
-	bringToFront = YES;
-	
-	if ( oldWindow )
-		[oldWindow release];
-}
-
-
 - (NSWindow*)downloadWindowForAuthenticationSheet:(WebDownload*)download;
 {
 	[NSApp activateIgnoringOtherApps:YES];
@@ -163,60 +51,6 @@
 {
 	[webView goForward];
 }
-
-
-- (void)initPrefs
-{
-	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
-	[defaultValues setObject:[NSNumber numberWithDouble:0.8] forKey:@"ActiveOpacity"];
-	[defaultValues setObject:[NSNumber numberWithDouble:0.5] forKey:@"InactiveOpacity"];
-	[defaultValues setObject:[NSNumber numberWithInt:0] forKey:@"RefreshInterval"];
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-
-	[activeOpacitySlider setDoubleValue:[[[NSUserDefaults standardUserDefaults] objectForKey:@"ActiveOpacity"] doubleValue]];
-	[inactiveOpacitySlider setDoubleValue:[[[NSUserDefaults standardUserDefaults] objectForKey:@"InactiveOpacity"] doubleValue]];
-
-	int mins = [[[NSUserDefaults standardUserDefaults] objectForKey:@"RefreshInterval"] intValue];
-
-	if ( mins == 1 )	
-		[refreshPopUp selectItemAtIndex:1];
-
-	else if ( mins == 5 )	
-		[refreshPopUp selectItemAtIndex:2];
-
-	else if ( mins == 15 )	
-		[refreshPopUp selectItemAtIndex:3];
-
-	else if ( mins == 30 )	
-		[refreshPopUp selectItemAtIndex:4];
-
-	else if ( mins == 60 )	
-		[refreshPopUp selectItemAtIndex:5];
-
-	else if ( mins == 2 * 60 )	
-		[refreshPopUp selectItemAtIndex:6];
-
-	else if ( mins == 4 * 60 )	// 4 hrs
-		[refreshPopUp selectItemAtIndex:7];
-
-	else if ( mins == 8 * 60 )	// 8 hrs
-		[refreshPopUp selectItemAtIndex:8];
-
-	else if ( mins == 12 * 60 )	// 12 hrs
-		[refreshPopUp selectItemAtIndex:9];
-
-	else if ( mins == 24 * 60 )	// 12 hrs
-		[refreshPopUp selectItemAtIndex:10];
-
-	else
-	{
-		mins = 0;
-		[refreshPopUp selectItemAtIndex:0];
-	}
-	
-	[self startTimer:mins];
-}	
-
 
 - (void)loadURL:(NSURL*)inURL
 {
@@ -372,89 +206,8 @@
 		[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
 }
 
-
-- (void)setClickThrough:(BOOL)clickThrough
-{
-	void* ref = [window windowRef];
-
-	if ( clickThrough )
-	{
-		ChangeWindowAttributes(ref, 
-				kWindowIgnoreClicksAttribute, kWindowNoAttributes);
-	}
-	else
-	{
-		ChangeWindowAttributes(ref, 
-				kWindowNoAttributes, kWindowIgnoreClicksAttribute);
-	}
-	
-	[window setIgnoresMouseEvents:clickThrough];
-}
-
-
-- (IBAction)setRefreshInterval:(id)sender
-{
-	int selected = [(NSPopUpButton*)sender indexOfSelectedItem];
-	int mins = 0;
-	
-	if ( selected == 1 )
-		mins = 1;
-
-	else if ( selected == 2 )
-		mins = 5;
-		
-	else if ( selected == 3 )
-		mins = 15;
-
-	else if ( selected == 4 )
-		mins = 30;
-
-	else if ( selected == 5 )
-		mins = 60;
-
-	else if ( selected == 6 )
-		mins = 2 * 60;
-
-	else if ( selected == 7 )
-		mins = 4 * 60;
-
-	else if ( selected == 8 )
-		mins = 8 * 60;
-
-	else if ( selected == 9 )
-		mins = 12 * 60;
-
-	else if ( selected == 10 )
-		mins = 24 * 60;
-
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:mins] forKey:@"RefreshInterval"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	[self startTimer:mins];
-}
-
-
-- (void)startTimer:(int)mins
-{
-	if ( timer )
-	{
-		[timer invalidate];
-		[timer release];
-		timer = nil;
-	}
-	
-	if ( mins == 0 )
-		return;
-		
-	timer = [NSTimer scheduledTimerWithTimeInterval:(mins * 60) target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:YES];
-	[timer retain];
-}
-
-
-- (void)setWindowFrameEnabled:(BOOL)windowFrameEnabled
-{		
-	NSRect frame = [window frame];
-	[self createWindowWithContentRect:frame showFrame:windowFrameEnabled];
+- (void)setwindow:(CustomWindow *)wnd {
+    window = wnd;
 }
 
 
@@ -514,4 +267,7 @@
 }
 
 
+- (void)setWebView:(WebView *)view {
+   webView = view;
+}
 @end

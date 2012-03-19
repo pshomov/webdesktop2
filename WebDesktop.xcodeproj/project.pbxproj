@@ -16,6 +16,7 @@
 		F10F08E3056C90030013C46D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		F10F08E4056C90030013C46D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1E5AC3D03AFB48900A800AB /* Carbon.framework */; };
 		F10F08E5056C90030013C46D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1DDBC3604B4C05C0081D57A /* WebKit.framework */; };
+		F1F1902409CF5E5700450C14 /* GlobalHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F1F1902409CF5E5700450C13 /* GlobalHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		F1E59FE403AFB31300A800AB /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		F1E5AC3D03AFB48900A800AB /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		F1F1902409CF5E5700450C12 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F1902409CF5E5700450C13 /* GlobalHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalHandler.m; sourceTree = "<group>"; };
+		F1F1902409CF5E5700450C15 /* GlobalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalHandler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F1F1902409CF5E5700450C15 /* GlobalHandler.h */,
+				F1F1902409CF5E5700450C13 /* GlobalHandler.m */,
 				F1E59FE303AFB31300A800AB /* Controller.h */,
 				F1E59FE403AFB31300A800AB /* Controller.m */,
 				F180279D03AFB58300A800AB /* CustomWindow.h */,
@@ -196,6 +201,7 @@
 				F10F08DF056C90030013C46D /* main.m in Sources */,
 				F10F08E0056C90030013C46D /* Controller.m in Sources */,
 				F10F08E1056C90030013C46D /* CustomWindow.m in Sources */,
+				F1F1902409CF5E5700450C14 /* GlobalHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +244,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = WebDesktop;
