@@ -100,7 +100,6 @@
 
 - (IBAction)openAbout:(id)sender
 {
-	bringToFront = NO;
 	[NSApp activateIgnoringOtherApps:YES];
 
 	[aboutWindow center];
@@ -110,7 +109,6 @@
 
 - (IBAction)openFile:(id)sender
 {   
-	bringToFront = NO;
 	[NSApp activateIgnoringOtherApps:YES];
 
 	NSOpenPanel* openPanel = [NSOpenPanel openPanel];
@@ -130,7 +128,6 @@
 
 - (IBAction)openLocation:(id)sender
 {
-	bringToFront = NO;
 	[NSApp activateIgnoringOtherApps:YES];
 
 	[openLocationWindow center];
@@ -165,7 +162,6 @@
 
 - (IBAction)prefs:(id)sender
 {
-	bringToFront = NO;
 	[NSApp activateIgnoringOtherApps:YES];
 
 	[prefsWindow center];
@@ -193,7 +189,6 @@
 
 - (void)refreshTimerFired:(NSTimer*)inTimer
 {
-	//NSLog(@"reloading page...");
 	[self refresh:self];
 }
 
@@ -253,16 +248,6 @@
 }
 
 
-- (void)windowDidMove:(NSNotification*)notification
-{
-	NSWindow* srcWindow = [notification object];
-	NSRect frameRect = [srcWindow frame];
-	NSRect contentRect = [NSWindow contentRectForFrameRect:frameRect styleMask:[srcWindow styleMask]];
-	[[NSUserDefaults standardUserDefaults] setObject:NSStringFromRect(contentRect) forKey:@"WindowFrame"];	
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue {
 
 	CustomWindow* oldWindow = window;
@@ -277,7 +262,7 @@
 	[window setAlphaValue:alphaValue];
 
 	[window setDelegate:self];
-	[self setClickThrough:NO];
+	[self setClickThrough:YES];
 
 	if ( !webView )
 	{
@@ -298,16 +283,8 @@
 	}
 
 	[window makeFirstResponder:webView];
+    [window makeKeyAndOrderFront:nil];
 
-	if ( bringToFront )
-		[window makeKeyAndOrderFront:nil];
-	else
-	{
-		[window makeKeyWindow];
-		[window orderBack:nil];
-	}
-
-	bringToFront = YES;
     [window center];
     [window display];
 

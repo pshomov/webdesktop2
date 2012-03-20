@@ -11,8 +11,7 @@
 	IBOutlet NSPopUpButton* refreshPopUp;
     IBOutlet NSMenu* mainmenu;
 
-	BOOL bringToFront;
-	NSURLRequest* cachedRequest;
+    NSURLRequest* cachedRequest;
 	NSURL* location;
     WebView* webView;
 	CustomWindow* window;
