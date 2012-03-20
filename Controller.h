@@ -14,8 +14,7 @@
 	BOOL bringToFront;
 	NSURLRequest* cachedRequest;
 	NSURL* location;
-	NSTimer* timer;
-	WebView* webView;
+    WebView* webView;
 	CustomWindow* window;
 }
 
@@ -34,7 +33,7 @@
 - (NSURL*)formatURL:(NSURL*)inURL;
 - (void)loadURL:(NSURL*)inURL;
 - (void)resetOpacity;
-- (void) setwindow:(CustomWindow *)wnd;
 
-- (void)setWebView:(WebView *)view;
+- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue;
+
 @end

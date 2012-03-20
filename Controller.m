@@ -206,10 +206,6 @@
 		[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
 }
 
-- (void)setwindow:(CustomWindow *)wnd {
-    window = wnd;
-}
-
 
 - (BOOL)validateMenuItem:(NSMenuItem*)item
 {
@@ -267,7 +263,80 @@
 }
 
 
-- (void)setWebView:(WebView *)view {
-   webView = view;
+- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue {
+
+	CustomWindow* oldWindow = window;
+    window = [[CustomWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO];
+
+    [window setMinSize:NSMakeSize(200, 100)];
+	[window setTitle:@"WebDesktop"];
+
+    [window setLevel:kCGDesktopWindowLevel];
+
+	[window setFrame:contentRect display:YES];
+	[window setAlphaValue:alphaValue];
+
+	[window setDelegate:self];
+	[self setClickThrough:NO];
+
+	if ( !webView )
+	{
+		webView = [[WebView alloc] initWithFrame:[[window contentView] frame] frameName:@"main" groupName:@"main"];
+		[webView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+		[webView setUIDelegate:self];
+		[webView setPolicyDelegate:self];
+		[webView setDownloadDelegate:self];
+
+		[[window contentView] addSubview:webView];
+	}
+	else
+	{
+		[webView setFrame:[[window contentView] frame]];
+		[webView retain];
+		[[window contentView] addSubview:webView];
+		[webView release];
+	}
+
+	[window makeFirstResponder:webView];
+
+	if ( bringToFront )
+		[window makeKeyAndOrderFront:nil];
+	else
+	{
+		[window makeKeyWindow];
+		[window orderBack:nil];
+	}
+
+	bringToFront = YES;
+    [window center];
+    [window display];
+
+	if ( oldWindow )
+		[oldWindow release];
+
+    NSString* lastURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"LastURL"];
+   	if ( lastURL )
+   		[self loadURL:[NSURL URLWithString:lastURL]];
+   	else
+   		[self loadURL:[NSURL URLWithString:@"http://www.panic.com/"]];
 }
+
+- (void)setClickThrough:(BOOL)clickThrough
+{
+	void* ref = [window windowRef];
+
+	if ( clickThrough )
+	{
+		ChangeWindowAttributes(ref,
+				kWindowIgnoreClicksAttribute, kWindowNoAttributes);
+	}
+	else
+	{
+		ChangeWindowAttributes(ref,
+				kWindowNoAttributes, kWindowIgnoreClicksAttribute);
+	}
+
+	[window setIgnoresMouseEvents:clickThrough];
+}
+
 @end

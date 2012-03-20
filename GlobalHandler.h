@@ -13,26 +13,16 @@
 
 @interface GlobalHandler : NSObject
 {
-	IBOutlet NSWindow* aboutWindow;
     IBOutlet NSSlider* activeOpacitySlider;
     IBOutlet NSSlider* inactiveOpacitySlider;
-    IBOutlet NSTextField* openLocationText;
-    IBOutlet NSWindow* openLocationWindow;
     IBOutlet NSWindow* prefsWindow;
 	IBOutlet NSPopUpButton* refreshPopUp;
     IBOutlet NSMenu* mainmenu;
 
 
-    CustomWindow* window;
     Controller* controller;
-	BOOL bringToFront;
-	NSURLRequest* cachedRequest;
-	NSURL* location;
-	NSTimer* timer;
-	WebView* webView;
+    NSTimer* timer;
 }
-@property(nonatomic, assign) int mins;
-
 - (IBAction)setRefreshInterval:(id)sender;
 - (void)initPrefs;
 @end
