@@ -1,0 +1,1 @@
+Original author of WebDekstop is Steven Frank. Original project can be found here http://code.google.com/p/webdesktop-macosx
