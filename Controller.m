@@ -316,4 +316,11 @@
 	[window setIgnoresMouseEvents:clickThrough];
 }
 
+- (void)dealloc {
+    [window release];
+    [cachedRequest release];
+    [location release];
+    [super dealloc];
+}
+
 @end

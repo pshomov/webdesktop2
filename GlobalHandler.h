@@ -20,7 +20,7 @@
     IBOutlet NSMenu* mainmenu;
 
 
-    Controller* controller;
+    NSArray* controller;
     NSTimer* timer;
 }
 - (IBAction)setRefreshInterval:(id)sender;

@@ -1,7 +1,6 @@
 @class CustomWindow;
 
-@interface Controller : NSObject
-{
+@interface Controller : NSObject <NSWindowDelegate> {
 	IBOutlet NSWindow* aboutWindow;
     IBOutlet NSSlider* activeOpacitySlider;
     IBOutlet NSSlider* inactiveOpacitySlider;
