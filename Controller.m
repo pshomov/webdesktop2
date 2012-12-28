@@ -13,19 +13,19 @@
 - (NSURL*)formatURL:(NSURL*)inURL
 {
 	NSMutableString* url;
-	
-	if ( inURL == nil ) 
+
+	if ( inURL == nil )
 		return nil;
-		
+
 	url = [NSMutableString stringWithString:[inURL absoluteString]];
-	
+
 	if( [inURL path] == nil || [[inURL path] length] == 0  )
 	{
 		[url appendString:@"/"];
-		
+
 		if( [inURL scheme] == nil )
 			[url insertString:@"http://" atIndex:0];
-		
+
 		return [NSURL URLWithString:url];
 	}
 	else
@@ -33,7 +33,7 @@
 	{
 		if( ![url hasSuffix:@"/"] )
 			[url appendString:@"/"];
-		
+
 		inURL = [NSURL URLWithString:url];
 	}
 
@@ -56,11 +56,11 @@
 {
 	[location autorelease];
 	location = [self formatURL:inURL];
-	
+
 	if ( location )
 	{
 		[location retain];
-		
+
 		NSString* ua = [webView userAgentForURL:inURL];
 		if ( ua )
 		{
@@ -72,22 +72,22 @@
 
 				NSString* webKitVersion = nil;
 				[scanner scanUpToString:@" " intoString:&webKitVersion];
-				
+
 				if ( webKitVersion )
 				{
-					[webView setApplicationNameForUserAgent:[NSString 
+					[webView setApplicationNameForUserAgent:[NSString
 										stringWithFormat:@"Safari/%@ (WebDesktop)", webKitVersion]]; // fix for Google Maps API javascript sniffer
 				}
 			}
 		}
-		
+
 		WebFrame* mainFrame = [webView mainFrame];
 		[mainFrame loadRequest:[NSURLRequest requestWithURL:location]];
 
 		[[NSUserDefaults standardUserDefaults] setObject:[inURL absoluteString] forKey:@"LastURL"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 	}
-	
+
 	[window makeFirstResponder:webView];
 }
 
@@ -108,7 +108,7 @@
 
 
 - (IBAction)openFile:(id)sender
-{   
+{
 	[NSApp activateIgnoringOtherApps:YES];
 
 	NSOpenPanel* openPanel = [NSOpenPanel openPanel];
@@ -116,9 +116,9 @@
 	[openPanel setCanChooseDirectories:NO];
 	[openPanel setResolvesAliases:YES];
 	[openPanel setAllowsMultipleSelection:NO];
-	
+
 	// XXX - Can we get the types from the Info.plist somehow?
-	
+
 	if ( [openPanel runModalForTypes:[NSArray arrayWithObjects:@"html", @"php", @"pl", nil]] == NSOKButton )
 	{
 		[self loadURL:[[openPanel URLs] objectAtIndex:0]];
@@ -148,14 +148,14 @@
 
 	NSMutableString*	urlString;
 	NSURL*				url;
-	
+
 	urlString = [NSMutableString stringWithString:
 					[openLocationText stringValue]];
 	url = [NSURL URLWithString:urlString];
-	
+
 	if( [url scheme] == nil )
 		[urlString insertString:@"http://" atIndex:0];
-	
+
 	[self loadURL:[NSURL URLWithString:urlString]];
 }
 
@@ -172,11 +172,11 @@
 - (IBAction)prefsOK:(id)sender
 {
 	[prefsWindow orderOut:self];
-	
+
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[activeOpacitySlider doubleValue]] forKey:@"ActiveOpacity"];
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[inactiveOpacitySlider doubleValue]] forKey:@"InactiveOpacity"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	
+
 	[self resetOpacity];
 }
 
@@ -209,7 +209,7 @@
 
 	if ( [item action] == @selector(goForward:) )
 		return [webView canGoForward];
-		
+
 	return YES;
 }
 
@@ -226,12 +226,12 @@
 {
 	if ( request == nil )
 		request = cachedRequest;
-		
+
 	[[NSWorkspace sharedWorkspace] openURL:[request URL]];
-	
+
 	[cachedRequest release];
 	cachedRequest = nil;
-	
+
 	return nil;
 }
 
@@ -271,8 +271,8 @@
 		[webView setUIDelegate:self];
 		[webView setPolicyDelegate:self];
 		[webView setDownloadDelegate:self];
-
-		[[window contentView] addSubview:webView];
+        [self disablePluginsInWebView];
+        [[window contentView] addSubview:webView];
 	}
 	else
 	{
@@ -296,6 +296,12 @@
    		[self loadURL:[NSURL URLWithString:lastURL]];
    	else
    		[self loadURL:[NSURL URLWithString:@"http://www.panic.com/"]];
+}
+
+- (void)disablePluginsInWebView {
+    WebPreferences *prefs = [WebPreferences standardPreferences];
+    [prefs setPlugInsEnabled:FALSE];
+    [webView setPreferences:prefs];
 }
 
 - (void)setClickThrough:(BOOL)clickThrough
