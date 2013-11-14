@@ -24,12 +24,10 @@
         }
     }
     NSMutableArray *new_controllers = [[[NSMutableArray alloc] init] autorelease];
-    NSArray *screens = [NSScreen screens];
-    for (NSUInteger k = 0; k < screens.count; k++) {
-        Controller *window_controller = [[[Controller alloc] init] autorelease];
-        [window_controller createWindowWithContentRect:[[screens objectAtIndex:k] frame] showFrame:FALSE alphaValue:[activeOpacitySlider doubleValue]];
-        [new_controllers addObject:window_controller];
-    }
+    Controller *window_controller = [[[Controller alloc] init] autorelease];
+    NSRect rect = [[NSScreen mainScreen] frame];
+    [window_controller createWindowWithContentRect:rect showFrame:FALSE alphaValue:[activeOpacitySlider doubleValue]];
+    [new_controllers addObject:window_controller];
     controller = [[NSArray alloc] initWithArray:new_controllers];
 }
 
