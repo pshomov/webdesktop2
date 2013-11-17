@@ -32,6 +32,6 @@
 - (void)loadURL:(NSURL*)inURL;
 - (void)resetOpacity;
 
-- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue;
+- (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue screen:(NSScreen*)screen;
 
 @end
