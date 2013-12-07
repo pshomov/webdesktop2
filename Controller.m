@@ -233,7 +233,6 @@
 	[window makeFirstResponder:webView];
     [window makeKeyAndOrderFront:nil];
 
-    [window center];
     [window display];
 
 	if ( oldWindow )
