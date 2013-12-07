@@ -2,8 +2,8 @@
 
 @implementation CustomWindow
 
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag {
-    NSWindow *result = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag];
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag screen:(NSScreen *)screen1{
+    NSWindow *result = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag screen:screen1];
 
     [result setBackgroundColor:[NSColor clearColor]];
     [result setOpaque:NO];

@@ -159,6 +159,61 @@
     }
 }
 
+- (IBAction)openFile:(id)sender
+{
+	[NSApp activateIgnoringOtherApps:YES];
+    
+	NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+	[openPanel setCanChooseFiles:YES];
+	[openPanel setCanChooseDirectories:NO];
+	[openPanel setResolvesAliases:YES];
+	[openPanel setAllowsMultipleSelection:NO];
+    
+	// XXX - Can we get the types from the Info.plist somehow?
+    
+	if ( [openPanel runModalForTypes:[NSArray arrayWithObjects:@"html", @"php", @"pl", nil]] == NSOKButton )
+	{
+		[self loadURL:[[openPanel URLs] objectAtIndex:0]];
+	}
+}
+
+
+- (IBAction)openLocation:(id)sender
+{
+	[NSApp activateIgnoringOtherApps:YES];
+    [openLocationText setStringValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"LastURL"]];
+    
+	[openLocationWindow center];
+	[openLocationWindow makeKeyAndOrderFront:self];
+	[openLocationWindow makeFirstResponder:openLocationText];
+}
+
+
+- (IBAction)openLocationCancel:(id)sender
+{
+	[openLocationWindow orderOut:self];
+}
+
+
+- (IBAction)openLocationOK:(id)sender
+{
+	[openLocationWindow orderOut:self];
+    
+	NSMutableString*	urlString;
+	NSURL*				url;
+    
+	urlString = [NSMutableString stringWithString:
+                 [openLocationText stringValue]];
+	url = [NSURL URLWithString:urlString];
+    
+	if( [url scheme] == nil )
+		[urlString insertString:@"http://" atIndex:0];
+    
+	[self loadURL:[NSURL URLWithString:urlString]];
+}
+
+
+
 - (void)dealloc {
     [controller release];
     [timer release];

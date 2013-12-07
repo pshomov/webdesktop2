@@ -4,8 +4,6 @@
 	IBOutlet NSWindow* aboutWindow;
     IBOutlet NSSlider* activeOpacitySlider;
     IBOutlet NSSlider* inactiveOpacitySlider;
-    IBOutlet NSTextField* openLocationText;
-    IBOutlet NSWindow* openLocationWindow;
     IBOutlet NSWindow* prefsWindow;
 	IBOutlet NSPopUpButton* refreshPopUp;
     IBOutlet NSMenu* mainmenu;
@@ -21,9 +19,6 @@
 - (IBAction)opacityAdjust:(id)sender;
 - (IBAction)openAbout:(id)sender;
 - (IBAction)openFile:(id)sender;
-- (IBAction)openLocation:(id)sender;
-- (IBAction)openLocationCancel:(id)sender;
-- (IBAction)openLocationOK:(id)sender;
 - (IBAction)prefs:(id)sender;
 - (IBAction)prefsOK:(id)sender;
 - (IBAction)refresh:(id)sender;

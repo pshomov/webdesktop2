@@ -18,11 +18,16 @@
     IBOutlet NSWindow* prefsWindow;
 	IBOutlet NSPopUpButton* refreshPopUp;
     IBOutlet NSMenu* mainmenu;
+    IBOutlet NSWindow* openLocationWindow;
+    IBOutlet NSTextField* openLocationText;
 
 
     NSArray* controller;
     NSTimer* timer;
 }
+- (IBAction)openLocation:(id)sender;
+- (IBAction)openLocationCancel:(id)sender;
+- (IBAction)openLocationOK:(id)sender;
 - (IBAction)setRefreshInterval:(id)sender;
 - (void)initPrefs;
 @end
