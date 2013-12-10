@@ -30,4 +30,7 @@
 - (IBAction)openLocationOK:(id)sender;
 - (IBAction)setRefreshInterval:(id)sender;
 - (void)initPrefs;
+
+- (IBAction)refresh:(id)sender;
+
 @end

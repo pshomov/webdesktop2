@@ -35,7 +35,7 @@
                 </menuItem>
                 <menuItem title="Refresh" keyEquivalent="r" id="408">
                     <connections>
-                        <action selector="refresh:" target="196" id="hZu-nb-0QH"/>
+                        <action selector="refresh:" target="445" id="R3b-F3-nkK"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Open URL…" keyEquivalent="l" id="312">

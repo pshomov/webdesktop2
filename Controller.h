@@ -21,7 +21,7 @@
 - (IBAction)openFile:(id)sender;
 - (IBAction)prefs:(id)sender;
 - (IBAction)prefsOK:(id)sender;
-- (IBAction)refresh:(id)sender;
+- (void)refresh;
 
 - (NSURL*)formatURL:(NSURL*)inURL;
 - (void)loadURL:(NSURL*)inURL;

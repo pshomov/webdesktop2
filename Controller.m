@@ -81,11 +81,13 @@
 			}
 		}
 
-		WebFrame* mainFrame = [webView mainFrame];
-		[mainFrame loadRequest:[NSURLRequest requestWithURL:location]];
-
 		[[NSUserDefaults standardUserDefaults] setObject:[inURL absoluteString] forKey:@"LastURL"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
+
+		WebFrame* mainFrame = [webView mainFrame];
+        [mainFrame stopLoading];
+		[mainFrame loadRequest:[NSURLRequest requestWithURL:location]];
+
 	}
 
 	[window makeFirstResponder:webView];
@@ -129,7 +131,7 @@
 }
 
 
-- (IBAction)refresh:(id)sender
+- (void)refresh
 {
 	[[webView mainFrame] reload];
 }
@@ -207,7 +209,7 @@
     [window setLevel:kCGDesktopWindowLevel];
 
 	[window setFrame:contentRect display:YES];
-	[window setAlphaValue:alphaValue];
+//	[window setAlphaValue:alphaValue];
 
 	[window setDelegate:self];
 	[self setClickThrough:YES];

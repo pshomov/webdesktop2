@@ -177,6 +177,25 @@
 	}
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    return [Controller instanceMethodSignatureForSelector:aSelector];
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    for (NSUInteger i = 0; i < controller.count; i++) {
+        [anInvocation invokeWithTarget:[controller objectAtIndex:i]];
+    }
+}
+
+- (IBAction)refresh:(id)sender
+{
+    for (NSUInteger i = 0; i < controller.count; i++) {
+        Controller* c = [controller objectAtIndex:i];
+        [c refresh];
+    }
+}
+
 
 - (IBAction)openLocation:(id)sender
 {
