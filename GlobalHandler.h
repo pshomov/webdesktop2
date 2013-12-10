@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class CustomWindow;
-@class Controller;
+@class DesktopBackgroundWindow;
+@class DesktopBackgroundController;
 
 
 @interface GlobalHandler : NSObject
@@ -20,6 +20,7 @@
     IBOutlet NSMenu* mainmenu;
     IBOutlet NSWindow* openLocationWindow;
     IBOutlet NSTextField* openLocationText;
+	IBOutlet NSWindow* aboutWindow;
 
 
     NSArray* controller;
@@ -30,6 +31,10 @@
 - (IBAction)openLocationOK:(id)sender;
 - (IBAction)setRefreshInterval:(id)sender;
 - (void)initPrefs;
+- (IBAction)openAbout:(id)sender;
+- (IBAction)prefs:(id)sender;
+- (IBAction)prefsOK:(id)sender;
+
 
 - (IBAction)refresh:(id)sender;
 

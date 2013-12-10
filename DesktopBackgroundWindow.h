@@ -1,0 +1,4 @@
+@interface DesktopBackgroundWindow : NSWindow
+{
+}
+@end

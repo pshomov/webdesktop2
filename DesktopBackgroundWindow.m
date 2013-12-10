@@ -1,6 +1,6 @@
-#import "CustomWindow.h"
+#import "DesktopBackgroundWindow.h"
 
-@implementation CustomWindow
+@implementation DesktopBackgroundWindow
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag screen:(NSScreen *)screen1{
     NSWindow *result = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag screen:screen1];

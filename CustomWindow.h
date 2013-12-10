@@ -1,4 +1,0 @@
-@interface CustomWindow : NSWindow
-{
-}
-@end

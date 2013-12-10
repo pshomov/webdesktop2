@@ -1,7 +1,7 @@
-#import "Controller.h"
-#import "CustomWindow.h"
+#import "DesktopBackgroundController.h"
+#import "DesktopBackgroundWindow.h"
 
-@implementation Controller
+@implementation DesktopBackgroundController
 
 - (NSWindow*)downloadWindowForAuthenticationSheet:(WebDownload*)download;
 {
@@ -93,44 +93,6 @@
 	[window makeFirstResponder:webView];
 }
 
-
-- (IBAction)opacityAdjust:(id)sender
-{
-	[window setAlphaValue:[sender doubleValue]];
-}
-
-
-- (IBAction)openAbout:(id)sender
-{
-	[NSApp activateIgnoringOtherApps:YES];
-
-	[aboutWindow center];
-	[aboutWindow makeKeyAndOrderFront:self];
-}
-
-
-
-- (IBAction)prefs:(id)sender
-{
-	[NSApp activateIgnoringOtherApps:YES];
-
-	[prefsWindow center];
-	[prefsWindow makeKeyAndOrderFront:self];
-}
-
-
-- (IBAction)prefsOK:(id)sender
-{
-	[prefsWindow orderOut:self];
-
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[activeOpacitySlider doubleValue]] forKey:@"ActiveOpacity"];
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[inactiveOpacitySlider doubleValue]] forKey:@"InactiveOpacity"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-
-	[self resetOpacity];
-}
-
-
 - (void)refresh
 {
 	[[webView mainFrame] reload];
@@ -139,16 +101,7 @@
 
 - (void)refreshTimerFired:(NSTimer*)inTimer
 {
-	[self refresh:self];
-}
-
-
-- (void)resetOpacity
-{
-	if ( [NSApp isActive] )
-		[window setAlphaValue:[activeOpacitySlider doubleValue]];
-	else
-		[window setAlphaValue:[inactiveOpacitySlider doubleValue]];
+	[self refresh];
 }
 
 
@@ -200,8 +153,8 @@
 
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue screen:(NSScreen*)screen{
 
-	CustomWindow* oldWindow = window;
-    window = [[CustomWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO screen:screen];
+	DesktopBackgroundWindow* oldWindow = window;
+    window = [[DesktopBackgroundWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO screen:screen];
 
     [window setMinSize:NSMakeSize(200, 100)];
 	[window setTitle:@"WebDesktop"];
@@ -209,7 +162,6 @@
     [window setLevel:kCGDesktopWindowLevel];
 
 	[window setFrame:contentRect display:YES];
-//	[window setAlphaValue:alphaValue];
 
 	[window setDelegate:self];
 	[self setClickThrough:YES];

@@ -6,7 +6,7 @@
 
 
 #import "GlobalHandler.h"
-#import "Controller.h"
+#import "DesktopBackgroundController.h"
 
 
 @implementation GlobalHandler {
@@ -26,7 +26,7 @@
     NSMutableArray *new_controllers = [[[NSMutableArray alloc] init] autorelease];
     NSArray *screens = [NSScreen screens];
     for (NSUInteger k = 0; k < screens.count; k++) {
-        Controller *window_controller = [[[Controller alloc] init] autorelease];
+        DesktopBackgroundController *window_controller = [[[DesktopBackgroundController alloc] init] autorelease];
         [window_controller createWindowWithContentRect:[[screens objectAtIndex:k] frame] showFrame:FALSE alphaValue:[activeOpacitySlider doubleValue] screen:[screens objectAtIndex:k]];
         [new_controllers addObject:window_controller];
     }
@@ -178,7 +178,7 @@
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    return [Controller instanceMethodSignatureForSelector:aSelector];
+    return [DesktopBackgroundController instanceMethodSignatureForSelector:aSelector];
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
@@ -191,7 +191,7 @@
 - (IBAction)refresh:(id)sender
 {
     for (NSUInteger i = 0; i < controller.count; i++) {
-        Controller* c = [controller objectAtIndex:i];
+        DesktopBackgroundController* c = [controller objectAtIndex:i];
         [c refresh];
     }
 }
@@ -231,7 +231,33 @@
 	[self loadURL:[NSURL URLWithString:urlString]];
 }
 
+- (IBAction)openAbout:(id)sender
+{
+	[NSApp activateIgnoringOtherApps:YES];
+    
+	[aboutWindow center];
+	[aboutWindow makeKeyAndOrderFront:self];
+}
 
+
+
+- (IBAction)prefs:(id)sender
+{
+	[NSApp activateIgnoringOtherApps:YES];
+    
+	[prefsWindow center];
+	[prefsWindow makeKeyAndOrderFront:self];
+}
+
+
+- (IBAction)prefsOK:(id)sender
+{
+	[prefsWindow orderOut:self];
+    
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[activeOpacitySlider doubleValue]] forKey:@"ActiveOpacity"];
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithDouble:[inactiveOpacitySlider doubleValue]] forKey:@"InactiveOpacity"];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 - (void)dealloc {
     [controller release];
