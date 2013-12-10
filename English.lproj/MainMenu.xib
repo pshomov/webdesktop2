@@ -16,6 +16,9 @@
             <items>
                 <menuItem title="About WebDesktop" id="58">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openAbout:" target="445" id="jY7-hk-aLY"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Preferences…" keyEquivalent="," id="129">
                     <connections>
@@ -182,7 +185,7 @@ DQ
         </window>
         <customObject id="445" userLabel="GlobalHandler" customClass="GlobalHandler">
             <connections>
-                <outlet property="aboutWindow" destination="226" id="uhe-9R-Nxs"/>
+                <outlet property="aboutWindow" destination="257" id="BFf-rv-o67"/>
                 <outlet property="mainmenu" destination="57" id="456"/>
                 <outlet property="openLocationText" destination="216" id="pUi-ft-gjS"/>
                 <outlet property="openLocationWindow" destination="213" id="NZF-Hb-QdA"/>
