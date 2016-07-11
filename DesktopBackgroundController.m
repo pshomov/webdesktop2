@@ -141,21 +141,32 @@
 
 - (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message
 {
-	NSRunAlertPanel(@"WebDesktop", message, @"OK", nil, nil);
+//	NSRunAlertPanel(@"WebDesktop", message, @"OK", nil, nil);
 }
 
 
 - (BOOL)webView:(WebView *)sender runJavaScriptConfirmPanelWithMessage:(NSString *)message
 {
-	return (NSRunAlertPanel(@"WebDesktop", message, @"Cancel", @"OK", nil) == NSAlertAlternateReturn);
+//	return (NSRunAlertPanel(@"WebDesktop", message, @"Cancel", @"OK", nil) == NSAlertAlternateReturn);
+    return FALSE;
 }
 
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+{
+    if (isPrimaryScreen){
+        NSString* result = [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(true)"];
+    } else {
+        NSString* result = [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(false)"];
+    }
+}
 
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue screen:(NSScreen*)screen{
 
 	DesktopBackgroundWindow* oldWindow = window;
     window = [[DesktopBackgroundWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO screen:screen];
 
+    NSRect frame = [screen frame];
+    isPrimaryScreen = (frame.origin.x == 0 && frame.origin.y == 0);
     [window setMinSize:NSMakeSize(200, 100)];
 	[window setTitle:@"WebDesktop"];
 
@@ -173,6 +184,7 @@
 		[webView setUIDelegate:self];
 		[webView setPolicyDelegate:self];
 		[webView setDownloadDelegate:self];
+        [webView setFrameLoadDelegate:self];
         [self disablePluginsInWebView];
         [[window contentView] addSubview:webView];
 	}

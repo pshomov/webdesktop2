@@ -4,6 +4,7 @@
     NSURLRequest* cachedRequest;
 	NSURL* location;
     WebView* webView;
+    BOOL isPrimaryScreen;
 	DesktopBackgroundWindow* window;
 }
 
