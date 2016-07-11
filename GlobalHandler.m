@@ -26,8 +26,9 @@
     NSMutableArray *new_controllers = [[[NSMutableArray alloc] init] autorelease];
     NSArray *screens = [NSScreen screens];
     for (NSUInteger k = 0; k < screens.count; k++) {
+        NSScreen *thisScreen = [screens objectAtIndex:k];
         DesktopBackgroundController *window_controller = [[[DesktopBackgroundController alloc] init] autorelease];
-        [window_controller createWindowWithContentRect:[[screens objectAtIndex:k] frame] showFrame:FALSE alphaValue:[activeOpacitySlider doubleValue] screen:[screens objectAtIndex:k]];
+        [window_controller createWindowWithContentRect:[thisScreen frame] showFrame:FALSE alphaValue:[activeOpacitySlider doubleValue] screen:thisScreen];
         [new_controllers addObject:window_controller];
     }
     controller = [[NSArray alloc] initWithArray:new_controllers];
