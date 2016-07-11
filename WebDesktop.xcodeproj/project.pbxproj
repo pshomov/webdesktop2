@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -165,7 +165,7 @@
 				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = F1F18FFA09CF5E0100450C12 /* Build configuration list for PBXProject "WebDesktop" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
