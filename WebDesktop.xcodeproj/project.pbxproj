@@ -162,7 +162,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0730;
 			};
 			buildConfigurationList = F1F18FFA09CF5E0100450C12 /* Build configuration list for PBXProject "WebDesktop" */;
 			compatibilityVersion = "Xcode 6.3";
@@ -248,6 +248,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.pshomov;
 				PRODUCT_NAME = WebDesktop;
 				SDKROOT = "";
 				SECTORDER_FLAGS = "";
@@ -271,8 +272,10 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.pshomov;
 				PRODUCT_NAME = WebDesktop;
 				SDKROOT = "";
 				SECTORDER_FLAGS = "";
@@ -285,8 +288,10 @@
 		F1F18FFB09CF5E0100450C12 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				ZERO_LINK = YES;
 			};
@@ -296,6 +301,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
 			name = Deployment;
