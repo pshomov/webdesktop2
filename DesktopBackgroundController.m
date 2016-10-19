@@ -231,7 +231,7 @@
 	{
 		ChangeWindowAttributes(ref,
 				kWindowNoAttributes, kWindowIgnoreClicksAttribute);
-        [window setLevel:NSNormalWindowLevel];
+        [window setLevel:kCGDesktopIconWindowLevel];
         
 	}
 
