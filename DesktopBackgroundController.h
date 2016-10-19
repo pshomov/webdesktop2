@@ -1,3 +1,7 @@
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+#import <WebKit/WebKit.h>
+
 @class DesktopBackgroundWindow;
 
 @interface DesktopBackgroundController : NSObject <NSWindowDelegate> {
@@ -6,6 +10,7 @@
     WebView* webView;
     BOOL isPrimaryScreen;
 	DesktopBackgroundWindow* window;
+    BOOL clickThrough;
 }
 
 - (IBAction)goBack:(id)sender;
@@ -16,5 +21,5 @@
 - (void)loadURL:(NSURL*)inURL;
 
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue screen:(NSScreen*)screen;
-
+- (void)toggleClickThrough;
 @end

@@ -11,6 +11,13 @@
 
 @implementation GlobalHandler {
     int _minutes;
+    NSEvent* keyboardMonitor;
+}
+
+BOOL checkAccessibility()
+{
+    NSDictionary* opts = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
+    return AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)opts);
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification {
@@ -32,6 +39,25 @@
         [new_controllers addObject:window_controller];
     }
     controller = [[NSArray alloc] initWithArray:new_controllers];
+
+    if (checkAccessibility()) {
+        NSLog(@"Accessibility Enabled");
+    }
+    else {
+        NSLog(@"Accessibility Disabled");
+    }
+    
+    keyboardMonitor = [NSEvent addGlobalMonitorForEventsMatchingMask:
+                     (NSEventMaskFlagsChanged)
+                      handler:^(NSEvent *incomingEvent) {
+                                if ([incomingEvent modifierFlags] & NSEventModifierFlagFunction) {
+                                    for (NSUInteger k = 0; k < new_controllers.count; k++) {
+                                        DesktopBackgroundController *thisScreen = [new_controllers objectAtIndex:k];
+                                        [thisScreen toggleClickThrough];
+                                    }
+                                    
+                                }
+                      }];
 }
 
 
@@ -261,6 +287,7 @@
 }
 
 - (void)dealloc {
+    [NSEvent removeMonitor:keyboardMonitor];
     [controller release];
     [timer release];
     [super dealloc];

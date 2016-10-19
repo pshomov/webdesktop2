@@ -1,5 +1,6 @@
 #import "DesktopBackgroundController.h"
 #import "DesktopBackgroundWindow.h"
+#import <Carbon/Carbon.h>
 
 @implementation DesktopBackgroundController
 
@@ -162,6 +163,7 @@
 
 - (void)createWindowWithContentRect:(NSRect)contentRect showFrame:(BOOL)showFrame alphaValue:(CGFloat)alphaValue screen:(NSScreen*)screen{
 
+    clickThrough = YES;
 	DesktopBackgroundWindow* oldWindow = window;
     window = [[DesktopBackgroundWindow alloc] initWithContentRect:contentRect styleMask:(showFrame ? NSTitledWindowMask | NSResizableWindowMask : NSBorderlessWindowMask) backing:NSBackingStoreBuffered defer:NO screen:screen];
 
@@ -170,12 +172,10 @@
     [window setMinSize:NSMakeSize(200, 100)];
 	[window setTitle:@"WebDesktop"];
 
-    [window setLevel:kCGDesktopWindowLevel];
-
 	[window setFrame:contentRect display:YES];
 
 	[window setDelegate:self];
-	[self setClickThrough:YES];
+	[self toggleClickThrough];
 
 	if ( !webView )
 	{
@@ -217,7 +217,7 @@
     [webView setPreferences:prefs];
 }
 
-- (void)setClickThrough:(BOOL)clickThrough
+- (void)toggleClickThrough
 {
 	void* ref = [window windowRef];
 
@@ -225,14 +225,18 @@
 	{
 		ChangeWindowAttributes(ref,
 				kWindowIgnoreClicksAttribute, kWindowNoAttributes);
+        [window setLevel:kCGDesktopWindowLevel];
 	}
 	else
 	{
 		ChangeWindowAttributes(ref,
 				kWindowNoAttributes, kWindowIgnoreClicksAttribute);
+        [window setLevel:NSNormalWindowLevel];
+        
 	}
 
 	[window setIgnoresMouseEvents:clickThrough];
+    clickThrough = !clickThrough;
 }
 
 - (void)dealloc {
