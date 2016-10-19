@@ -11,7 +11,8 @@
 
 @implementation GlobalHandler {
     int _minutes;
-    NSEvent* keyboardMonitor;
+    NSEvent* globalKeyboardMonitor;
+    NSEvent* localKeyboardMonitor;
 }
 
 BOOL checkAccessibility()
@@ -22,6 +23,15 @@ BOOL checkAccessibility()
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)aNotification {
     [self setupBrowserForEachDesktop];
+}
+
+- (void)handleNSEvent:(NSMutableArray *)new_controllers incomingEvent:(NSEvent *)incomingEvent {
+  if ([incomingEvent modifierFlags] & NSEventModifierFlagFunction) {
+     for (NSUInteger k = 0; k < new_controllers.count; k++) {
+         DesktopBackgroundController *thisScreen = [new_controllers objectAtIndex:k];
+         [thisScreen toggleClickThrough];
+     }
+  }
 }
 
 - (void)setupBrowserForEachDesktop {
@@ -47,17 +57,16 @@ BOOL checkAccessibility()
         NSLog(@"Accessibility Disabled");
     }
     
-    keyboardMonitor = [NSEvent addGlobalMonitorForEventsMatchingMask:
-                     (NSEventMaskFlagsChanged)
-                      handler:^(NSEvent *incomingEvent) {
-                                if ([incomingEvent modifierFlags] & NSEventModifierFlagFunction) {
-                                    for (NSUInteger k = 0; k < new_controllers.count; k++) {
-                                        DesktopBackgroundController *thisScreen = [new_controllers objectAtIndex:k];
-                                        [thisScreen toggleClickThrough];
-                                    }
-                                    
-                                }
-                      }];
+    globalKeyboardMonitor = [NSEvent addGlobalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged)
+        handler:^(NSEvent *incomingEvent) {
+            [self handleNSEvent:new_controllers incomingEvent:incomingEvent];
+        }];
+    
+    localKeyboardMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged)
+        handler:^NSEvent*(NSEvent *incomingEvent) {
+            [self handleNSEvent:new_controllers incomingEvent:incomingEvent];
+            return incomingEvent;
+        }];
 }
 
 
@@ -287,7 +296,8 @@ BOOL checkAccessibility()
 }
 
 - (void)dealloc {
-    [NSEvent removeMonitor:keyboardMonitor];
+    [NSEvent removeMonitor:globalKeyboardMonitor];
+    [NSEvent removeMonitor:localKeyboardMonitor];
     [controller release];
     [timer release];
     [super dealloc];
