@@ -150,7 +150,7 @@ BOOL checkAccessibility()
 }
 
 - (IBAction)setRefreshInterval:(id)sender {
-    int selected = [(NSPopUpButton *) sender indexOfSelectedItem];
+    long selected = [(NSPopUpButton *) sender indexOfSelectedItem];
     int minutes = 0;
 
     if (selected == 1)

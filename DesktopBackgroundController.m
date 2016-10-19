@@ -155,9 +155,9 @@
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
     if (isPrimaryScreen){
-        NSString* result = [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(true)"];
+        [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(true)"];
     } else {
-        NSString* result = [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(false)"];
+        [sender stringByEvaluatingJavaScriptFromString:@"isPrimary(false)"];
     }
 }
 
